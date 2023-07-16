@@ -6,7 +6,6 @@ class Database:
 
 
 def input_details():
-    global it
     d1 = Database()
     d1.no_of_subs = int(input("Enter the number of subjects: "))
     for subs in range(d1.no_of_subs):
