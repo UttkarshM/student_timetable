@@ -19,8 +19,7 @@ for i in range(num_subs):
     name, credit = get_input()
     table.append(MyStructure(name, credit))
 
-# Print values for each instance
-for j in table:
-    print()
-    print(f"Sub name: {j.subName.upper()}")
-    print(f"Sub credit: {j.subCredit}")
+#save values in text file
+with open ('subjectinfo.txt', 'w') as f:
+   for j in table:   
+      f.write(f"Sub name: {j.subName.upper()} \t Sub credit: {j.subCredit} \n")
