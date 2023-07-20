@@ -16,18 +16,19 @@
 
 class ClassTimetable{
     std::vector<std::vector<std::pair<std::string,int>>> Timetable;
-    std::unordered_map<std::string,int> Subject_to_credits;
+    std::unordered_map<std::string,int> Subject_to_credits={{"english",10}};
     /*this is a vector that contains vectors which contains all the subjects in a day ,
     and the reason why we are using a pairs here is because we wanna map the subject to the course
     , 
     in python you can make a list that contains a list of dictionaries
     */
     public:
-        int DaysOccupied(){
+        int DaysOccupied(){//returns how many days have already been filled
             return Timetable.size();
         }
-        int return_int(std::string str){ //some problem with stoi so i made this change this later
-            int val=0;
+        int return_int(std::string str){ //type conversion from character or string to int
+            //some problem with stoi so i made this change this later
+            int val=0; 
             for(char ch:str){
                 if(isdigit(ch)){
                     val=val*10+(ch-'0'); // ascii value of numbers start from 0-48 we are subtracting it to get the actual numbers.
@@ -109,6 +110,9 @@ class ClassTimetable{
             else{
                 std::cout<<"table is empty"<<std::endl;
             }
+        }
+        void automaticInsert(){
+
         }
 };
 int main(){
