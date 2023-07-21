@@ -1,4 +1,5 @@
 //preprocessor definations
+
 #include<cctype>
 #include<iostream>
 #include<vector>
@@ -11,12 +12,15 @@
 #include<unordered_set>
 #include<algorithm>
 #include<random>
+
 //marcos
+//change the value of the constants later.
 #define NameLimit 100
 #define NumberOfSubjects 2
 #define Periods_perday 5
 #define WorkingDaysperWeek 5
-
+#define MinCreditsPerday 45
+#define MaxCreditsPerday 180
 class ClassTimetable{
     std::vector<std::string>Subjects;
     std::vector<std::vector<std::pair<std::string,int>>> Timetable;
@@ -24,23 +28,24 @@ class ClassTimetable{
     std::unordered_map<std::string,int> Subject_to_credits;
     std::unordered_map<std::string,int> TotalNumberofTeachers;
     
-    std::vector<std::vector<std::string>> AutoTimetable;
+    std::vector<std::vector<std::string>> AutoTimetable; // for automatic timetable generation.
+
     /*this is a vector that contains vectors which contains all the subjects in a day ,
     and the reason why we are using a pairs here is because we wanna map the subject to the course
     , 
     in python you can make a list that contains a list of dictionaries
     */
     public:
-    bool is_in(int num,std::vector<int> v){
-        for(auto it:v){
-            if(num==it){
+    bool is_in(std::vector<std::vector<std::string>>large,std::vector<std::string> smallvec){
+        for(std::vector<std::string> it:large){
+            if(smallvec==it){
                 return true;
             }
         }
         return false;
     }
         int random_number(int max,int min=0){
-            sleep(1);
+           // usleep(100000);
             srand(time(NULL));
             int random=rand()%(max-min+1)+min;
             return random;
@@ -130,19 +135,24 @@ class ClassTimetable{
         }
         void subjectEntry(){
             std::string input;
-
+            std::unordered_set<std::string> sets;
             std::cout<<"enter the subject"<<std::endl;
             displaythetopics();
             std::cin>>input;
             while(input!="exit"){
-                Subjects.push_back(input);
+                sets.insert(input);
                 std::cout<<"enter your subject or press \"exit\" if your done"<<std::endl;
                 displaythetopics();
                 std::cin>>input;
             }
-            for(auto it:Subjects){
-                std::cout<<it<<std::endl;
+            for(auto it:sets){
+                if(Subject_to_credits[it]!=0){
+                Subjects.push_back(it);
+                }
             }
+            //giving some lines as space in the terminal
+                std::cout<<std::endl;
+                std::cout<<std::endl;
                 std::cout<<std::endl;
                 std::cout<<std::endl;
                 std::cout<<std::endl;
@@ -157,8 +167,8 @@ class ClassTimetable{
                 }
                 std::cout<<"("<<sum<<")"<<std::endl;
 
-                std::cout<<"\\"<<std::endl;
-                std::cout<<"\\"<<std::endl;
+                std::cout<<""<<std::endl;
+                std::cout<<""<<std::endl;
             }
             }
             else{
@@ -166,44 +176,31 @@ class ClassTimetable{
             }
         }
         int i=0;
-        void automaticInsert_perday(int i=0){
+        void automaticInsert_perday(int day=0){
+            int creditsperday=0;
             std::vector<std::string> currentDay;
             std::unordered_set<int> sets;
-            int randnum=random_number(Subjects.size()-1,0);
-            //int n=Subjects.size();
+            int randnum=random_number(Subjects.size()-1,1);
 
-        //     while(sets.size()<=n){
-        //         int num=random_number(n);
-        //        // std::cout<<num<<std::endl;
-        //         sets.insert(num);
-        //     }
-        // for(auto it:sets){
-        //         int i=it;
-        //         std::cout<<i<<"-"<<Subjects[i]<<std::endl;
-        //     }
-        // for(int i=0;i<n;i++){
-        //     std::cout<<i<<"-"<<Subjects[i]<<std::endl;
-        // }
             std::random_device rd;
             std::shuffle(Subjects.begin(), Subjects.end(), rd);
-            //std::shuffle(Subjects.begin(),Subjects.end(), std::default_random_engine(0));
             std::vector<std::string>::iterator iter;
-            //int index=0;
-            // for(iter=Subjects.begin();iter!=Subjects.end();++iter){
-            //     if(TotalNumberofTeachers[*iter]!=0){
-            //         currentDay.push_back(*iter);
-            //         index++;
-            //     }
+
             for(int i=0;i<=randnum;i++){
                 currentDay.push_back(Subjects[i]);
-            }
-            if(i<5){
-                i++;
-                AutoTimetable.push_back(currentDay);
-                automaticInsert_perday(i);
-            }
+                creditsperday+=Subject_to_credits[Subjects[i]];
             }
 
+            if(day<WorkingDaysperWeek){ //recursion loop
+                if(creditsperday<MinCreditsPerday /*|| is_in(AutoTimetable,currentDay)*/){ // for the second argument we should make it so that the number of elements are greater than 3-4 cause if not theyr gonna repeat again.
+                    currentDay.clear();
+                    automaticInsert_perday(day);
+                }
+                day++;
+                AutoTimetable.push_back(currentDay);
+                automaticInsert_perday(day);
+            }
+            }
             void printauto(){
                 for(auto it:AutoTimetable){
                     int sum=0;
@@ -218,37 +215,40 @@ class ClassTimetable{
 int main(){
     int choice;
     ClassTimetable B_section;
-    B_section.load_info(); // make it a construct later so that it happens automatically.
-    // for(int i=0;i<WorkingDaysperWeek;i++){
-    //     std::cout<<"DAY "<<i+1<<":\n";
-    //     B_section.TimetableInsert();
-    // }
-    // B_section.DisplayTimetable();
-    // while(1){
-    // std::cout<<"Choose one option out of these:\n1.)Insert another day\t2.)Display the current weekly timetable)\n3.)exit program\n";
-    // std::cin>>choice;
-    // switch(choice){
-    //     case 1:
-    //     if(B_section.DaysOccupied()<=WorkingDaysperWeek){
-    //         B_section.TimetableInsert();
-    //     }
-    //     else{
-    //         std::cout<<"the week has already been occupied completely"<<std::endl;
-    //     }
-    //     break;
-    //     case 2:
-    //         B_section.DisplayTimetable();
-    //         break;
-    //     case 3:
-    //         std::cout<<"program has ended.";
-    //         return 0; // exits the program directly
-    //     default:
-    //         std::cout<<"Invalid choice";
-    //        break;
-    // }
-    // }
+    B_section.load_info();
+    //make it a construct later so that it happens automatically.
+    int operation;
+    std::cout<< "enter your choice:\n1.)automatic timetable\t2.)manual timetable";
+    std::cin>>operation;
+    if(operation==1){
     B_section.subjectEntry();
     B_section.automaticInsert_perday();
     B_section.printauto();
+    }
+    else{
+    while(1){
+    std::cout<<"Choose one option out of these:\n1.)Insert another day\t2.)Display the current weekly timetable)\n3.)exit program\n";
+    std::cin>>choice;
+    switch(choice){
+        case 1:
+        if(B_section.DaysOccupied()<=WorkingDaysperWeek){
+            B_section.TimetableInsert();
+        }
+        else{
+            std::cout<<"the week has already been occupied completely"<<std::endl;
+        }
+        break;
+        case 2:
+            B_section.DisplayTimetable();
+            break;
+        case 3:
+            std::cout<<"program has ended.";
+            return 0; // exits the program directly
+        default:
+            std::cout<<"Invalid choice";
+           break;
+    }
+    }
+    }
     return 0;
 }
