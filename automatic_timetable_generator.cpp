@@ -1,5 +1,4 @@
 //preprocessor definations
-
 #include<cctype>
 #include<iostream>
 #include<vector>
@@ -16,11 +15,13 @@
 //marcos
 //change the value of the constants later.
 #define NameLimit 100
-#define NumberOfSubjects 2
+#define NumberOfSubjects 4
 #define Periods_perday 5
 #define WorkingDaysperWeek 5
 #define MinCreditsPerday 45
 #define MaxCreditsPerday 180
+
+
 class ClassTimetable{
     std::vector<std::string>Subjects;
     std::vector<std::vector<std::pair<std::string,int>>> Timetable;
@@ -45,7 +46,7 @@ class ClassTimetable{
         return false;
     }
         int random_number(int max,int min=0){
-           // usleep(100000);
+            usleep(900000);
             srand(time(NULL));
             int random=rand()%(max-min+1)+min;
             return random;
@@ -97,7 +98,7 @@ class ClassTimetable{
                 }
             }
             std::fstream file1;
-            file1.open("availableLanguages.txt",std::ios::in);
+            file1.open("availableteacher.txt",std::ios::in);
             std::string buffer1;
             while(getline(file,buffer1)){
                 for(auto it:parser(buffer1)){
@@ -136,13 +137,12 @@ class ClassTimetable{
         void subjectEntry(){
             std::string input;
             std::unordered_set<std::string> sets;
-            std::cout<<"enter the subject"<<std::endl;
             displaythetopics();
+            std::cout<<"enter the subject"<<std::endl;
             std::cin>>input;
             while(input!="exit"){
                 sets.insert(input);
                 std::cout<<"enter your subject or press \"exit\" if your done"<<std::endl;
-                displaythetopics();
                 std::cin>>input;
             }
             for(auto it:sets){
@@ -180,7 +180,7 @@ class ClassTimetable{
             int creditsperday=0;
             std::vector<std::string> currentDay;
             std::unordered_set<int> sets;
-            int randnum=random_number(Subjects.size()-1,1);
+            int randnum=random_number(Subjects.size(),1);
 
             std::random_device rd;
             std::shuffle(Subjects.begin(), Subjects.end(), rd);
@@ -196,8 +196,14 @@ class ClassTimetable{
                     currentDay.clear();
                     automaticInsert_perday(day);
                 }
+                if(Subjects.size()>4){
+                    if(is_in(AutoTimetable,currentDay)){
+                        currentDay.clear();
+                        automaticInsert_perday(day);
+                    }
+                }
                 day++;
-                AutoTimetable.push_back(currentDay);
+                AutoTimetable.push_back(currentDay);//moves on to the next day
                 automaticInsert_perday(day);
             }
             }
@@ -209,6 +215,19 @@ class ClassTimetable{
                         std::cout<<iter<<"  ||  ";
                     }
                     std::cout<<sum<<std::endl;
+                }
+            }
+            void insert_into_file(std::string section){
+                std::fstream file;
+                std::string name="Timetables/"+section+"_section.txt";
+                file.open(name,std::ios::out);
+                for(auto it:AutoTimetable){
+                    int sum=0;
+                    for(auto iter:it){
+                        sum+=Subject_to_credits[iter];
+                        file<<iter<<" || ";
+                    }
+                    file<<sum<<"\n"<<std::endl;
                 }
             }
 };
@@ -224,6 +243,15 @@ int main(){
     B_section.subjectEntry();
     B_section.automaticInsert_perday();
     B_section.printauto();
+    int save;
+    std::cout<<"do you want to save it to a file:\t1.)yes\t2.)no\n"<<std::endl;
+    std::cin>>save;
+    if(save){
+        std::string section;
+        std::cout<<"enter the section:"<<std::endl;
+        std::cin>>section;
+        B_section.insert_into_file((section));
+    }
     }
     else{
     while(1){
