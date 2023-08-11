@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/stud_tt.dir/automatic_timetable_generator.cpp.o -o stud_tt 
