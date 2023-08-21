@@ -1,3 +1,5 @@
-cmake_minimum_required(VERSION 3.0.0)
-project(stud_tt)
-add_executable(stud_tt automatic_timetable_generator.cpp)
+cmake_minimum_required(VERSION 3.0)
+project(pybind)
+add_subdirectory(pybind11) #adding the directory
+pybind11_add_module(tester tester.cpp) #cmake function loaded from the directory
+

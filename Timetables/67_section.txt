@@ -1,0 +1,12 @@
+python || arithemtic || bash || 190
+
+maths || english || 70
+
+arithemtic || bash || maths || 210
+
+python || maths || bash || 150
+
+english || arithemtic || maths || bash || python || 260
+
+bash || english || python || 140
+
