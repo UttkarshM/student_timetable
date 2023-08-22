@@ -6,9 +6,11 @@
 #include<stdlib.h>
 #include<string>
 #include<unistd.h>
+#include<climits>
 #include<unordered_set>
 #include<algorithm>
 #include<random>
+//pybindings
 #include<pybind11/stl.h>
 #include<pybind11/pybind11.h>
 
@@ -18,7 +20,9 @@
 #define MinCreditsPerday 45
 #define MaxCreditsPerday 180
 
+
 using namespace std;
+
 namespace py=pybind11;
 
 class ClassTimetable{ 
@@ -40,10 +44,9 @@ class ClassTimetable{
     */
    
     ClassTimetable(){}
-    bool compare_tt(){
-
-        return false;
-    }
+    // bool compare_tt(){
+    //     return false;
+    // }
     bool is_in(std::vector<std::vector<std::string>>large,std::vector<std::string> smallvec){
         for(std::vector<std::string> it:large){
             if(smallvec==it){
@@ -97,7 +100,7 @@ class ClassTimetable{
         }
         void load_info(){// loads information from the file
             std::fstream file;
-            file.open("availableLanguages.txt",std::ios::in);
+            file.open("file_transfers/availableLanguages.txt",std::ios::in);
             std::string buffer;
             while(getline(file,buffer)){
                 for(auto it:parser(buffer)){
@@ -105,7 +108,7 @@ class ClassTimetable{
                 }
             }
             std::fstream file1;
-            file1.open("availableteacher.txt",std::ios::in);
+            file1.open("file_transfers/availableteacher.txt",std::ios::in);
             std::string buffer1;
             while(getline(file1,buffer1)){
                 // cout<<buffer1<<endl;
@@ -137,8 +140,10 @@ class ClassTimetable{
         int i=0;
         vector<vector<string>> automaticInsert_perday(){
             // Subjects={"python","c++","maths","bash"};
-            int day=0;
-            while(day<6){
+            int day=0,iter=0;
+
+            while(day<5 && iter<INT_MAX){
+            iter++;
             int creditsperday=0;
             std::vector<std::string> currentDay;
             std::unordered_set<int> sets;
@@ -173,9 +178,9 @@ class ClassTimetable{
                     std::cout<<sum<<std::endl;
                 }
             }
-            void insert_into_file(){
+            void insert_into_file(string section){
                 std::fstream file;
-                std::string name="Timetables/"+to_string(section)+"_section.txt";
+                std::string name="Timetables/"+(section)+"_section.txt";
                 file.open(name,std::ios::out);
                 for(auto it:AutoTimetable){
                     int sum=0;
@@ -206,6 +211,7 @@ PYBIND11_MODULE(tester,handle){
         handle,"cpp_class"
     )
     .def(py::init<>()) // for constructor
+    //this is to expose the functions.
     .def("loader",&ClassTimetable::load_info)
     .def("parser",&ClassTimetable::parser)
     .def("subject_entry",&ClassTimetable::subjectEntry)
@@ -217,3 +223,5 @@ PYBIND11_MODULE(tester,handle){
     .def("printer",&ClassTimetable::printauto)
     ;
 }
+
+
