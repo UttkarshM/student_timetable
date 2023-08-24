@@ -27,7 +27,7 @@ CMAKE_BUILD_TYPE:STRING=Debug
 CMAKE_COLOR_MAKEFILE:BOOL=ON
 
 //CXX compiler
-CMAKE_CXX_COMPILER:FILEPATH=/usr/bin/c++
+CMAKE_CXX_COMPILER:STRING=/usr/bin/g++
 
 //A wrapper around 'ar' adding the appropriate '--plugin' option
 // for the GCC compiler
@@ -53,7 +53,7 @@ CMAKE_CXX_FLAGS_RELEASE:STRING=-O3 -DNDEBUG
 CMAKE_CXX_FLAGS_RELWITHDEBINFO:STRING=-O2 -g -DNDEBUG
 
 //C compiler
-CMAKE_C_COMPILER:FILEPATH=/usr/bin/cc
+CMAKE_C_COMPILER:STRING=/usr/bin/gcc
 
 //A wrapper around 'ar' adding the appropriate '--plugin' option
 // for the GCC compiler
@@ -323,15 +323,6 @@ pybind_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 pybind_SOURCE_DIR:STATIC=/home/uttkarsh/student_timetable/student_timetable
-
-//Value Computed by CMake
-pybinder_BINARY_DIR:STATIC=/home/uttkarsh/student_timetable/student_timetable/build
-
-//Value Computed by CMake
-pybinder_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-pybinder_SOURCE_DIR:STATIC=/home/uttkarsh/student_timetable/student_timetable
 
 
 ########################

@@ -1,1 +1,1 @@
-/usr/bin/c++ -fPIC -g -shared  -o tester.cpython-311-x86_64-linux-gnu.so CMakeFiles/tester.dir/tester.cpp.o 
+/usr/bin/g++ -fPIC -g -shared  -o tester.cpython-311-x86_64-linux-gnu.so CMakeFiles/tester.dir/tester.cpp.o 

@@ -1,7 +1,0 @@
-arithemtic 80
-python 20
-english 30
-maths 40
-c 35
-c++ 70
-bash 90

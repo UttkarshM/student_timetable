@@ -1,0 +1,7 @@
+arithemtic 5
+python 3
+english 2
+maths 5
+c 4
+c++ 3
+bash 2

@@ -1,0 +1,12 @@
+english || 30
+
+python || maths || 60
+
+english || maths || python || 90
+
+english || 30
+
+english || python || 50
+
+maths || python || english || 90
+

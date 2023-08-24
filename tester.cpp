@@ -18,8 +18,8 @@
 //marcos//change the value of the constants later.
 
 #define WorkingDaysperWeek 5
-#define MinCreditsPerday 45
-#define MaxCreditsPerday 180
+#define MinCreditsPerday 3
+#define MaxCreditsPerday 30
 #define MaxPeriods 4
 
 
@@ -111,7 +111,7 @@ class ClassTimetable{
         return false;
     }
         int random_number(int max,int min=0){
-            //usleep(900000);
+            usleep(900000);
             srand(time(NULL));
             int random=rand()%(max-min+1)+min;
             return random;

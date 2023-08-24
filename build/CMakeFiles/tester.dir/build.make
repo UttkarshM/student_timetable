@@ -73,15 +73,15 @@ CMakeFiles/tester.dir/tester.cpp.o: CMakeFiles/tester.dir/flags.make
 CMakeFiles/tester.dir/tester.cpp.o: /home/uttkarsh/student_timetable/student_timetable/tester.cpp
 CMakeFiles/tester.dir/tester.cpp.o: CMakeFiles/tester.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/uttkarsh/student_timetable/student_timetable/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/tester.dir/tester.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tester.dir/tester.cpp.o -MF CMakeFiles/tester.dir/tester.cpp.o.d -o CMakeFiles/tester.dir/tester.cpp.o -c /home/uttkarsh/student_timetable/student_timetable/tester.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tester.dir/tester.cpp.o -MF CMakeFiles/tester.dir/tester.cpp.o.d -o CMakeFiles/tester.dir/tester.cpp.o -c /home/uttkarsh/student_timetable/student_timetable/tester.cpp
 
 CMakeFiles/tester.dir/tester.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/tester.dir/tester.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/uttkarsh/student_timetable/student_timetable/tester.cpp > CMakeFiles/tester.dir/tester.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/uttkarsh/student_timetable/student_timetable/tester.cpp > CMakeFiles/tester.dir/tester.cpp.i
 
 CMakeFiles/tester.dir/tester.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/tester.dir/tester.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/uttkarsh/student_timetable/student_timetable/tester.cpp -o CMakeFiles/tester.dir/tester.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/uttkarsh/student_timetable/student_timetable/tester.cpp -o CMakeFiles/tester.dir/tester.cpp.s
 
 # Object files for target tester
 tester_OBJECTS = \

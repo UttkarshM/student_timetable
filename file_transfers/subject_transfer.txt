@@ -1,7 +1,4 @@
-#C
 c
-maths
 english
-python
-bash
+c++
 arithemtic
