@@ -30,7 +30,7 @@ namespace py=pybind11;
 class ClassTimetable{ 
     public:
     std::vector<std::string>Subjects;
-    std::vector<std::vector<std::vector<std::string>>> College_timetable;
+    // std::vector<std::vector<std::vector<std::string>>> College_timetable;
     std::vector<std::vector<std::pair<std::string,int>>> Timetable;
     
     std::unordered_map<std::string,int> Subject_to_credits;
@@ -44,10 +44,9 @@ class ClassTimetable{
     , 
     in python you can make a list that contains a list of dictionaries
     */
-   
+   //empty constructor
     ClassTimetable(){}
-
-    int timetable_compare(string stre,vector<vector<string>>Auto){
+    int timetable_compare(string stre){
         fstream file;
         file.open("Timetables/"+stre,ios::in);
         string buffer;
@@ -78,7 +77,7 @@ class ClassTimetable{
         //     }
         // }
         // cout<<prev.size()<<"-"<<Auto.size()<<endl;
-        if(prev==Auto){
+        if(prev==AutoTimetable){
             return 1;
         }
         return 0;
@@ -93,7 +92,7 @@ class ClassTimetable{
         while ((en = readdir(dr)) != NULL) {
             if(en->d_name[0]!='.'){ // dot means secret files
             // files.push_back(en->d_name);
-                if(timetable_compare(en->d_name,autott)){
+                if(timetable_compare(en->d_name)){
                     return true; //i.e duplicate 
                 }
         }
@@ -197,7 +196,7 @@ class ClassTimetable{
             // Subjects={"python","c++","maths","bash"};
             int day=0,iter=0;
             if(Subjects.size()==0){
-                return {};
+                return {{}};
             }
             while(day<5 && iter<INT_MAX){
             iter++;
@@ -216,8 +215,9 @@ class ClassTimetable{
             std::shuffle(Subjects.begin(), Subjects.end(), rd);
             std::vector<std::string>::iterator iter;
             int i=0;
-            while(i<randnum && currentDay.size()<randnum){
+            while(i<limit && currentDay.size()<randnum){
                 if(TotalNumberofTeachers[Subjects[i]]!=0){
+                    TotalNumberofTeachers[Subjects[i]]--;
                     currentDay.push_back(Subjects[i]);
                     creditsperday+=Subject_to_credits[Subjects[i]];
                 }
@@ -229,8 +229,10 @@ class ClassTimetable{
                 currentDay.clear();
             }
         }
+            if(Subjects.size()>3){
             if(compare_tt(AutoTimetable)){
                 cout<<"duplicate"<<endl;
+            }
             }
             return AutoTimetable;
         }
@@ -256,24 +258,36 @@ class ClassTimetable{
                     file<<"\n";
                 }
             }
+            void file_transplant(){
+                fstream file,file1;
+                file1.open("file_transfers/availableteacher.txt",ios::out);
+                file1.close();
+                file.open("file_transfers/availableteacher.txt",ios::app);
+                unordered_map<string,int>::iterator it;
+                for(it=TotalNumberofTeachers.begin();it!=TotalNumberofTeachers.end();++it){
+                    file<<it->first<<" "<<it->second<<"\n";
+                }
+
+            }
 };
-int main(){
-    int choice;
-    ClassTimetable B_section;
-    //B_section.load_info();
-    //cout<<B_section.TotalNumberofTeachers["c"]<<B_section.Subject_to_credits["c++"];
-    //make it a construct later so that it happens automatically.
-    //B_section.subjectEntry();
-    //auto vec=B_section.automaticInsert_perday();
+// int main(){
+//     int choice;
+//     ClassTimetable B_section;
+//     //B_section.load_info();
+//     cout<<B_section.TotalNumberofTeachers["c"]<<B_section.Subject_to_credits["c++"];
+//     //make it a construct later so that it happens automatically.
+//     B_section.subjectEntry();
+//     auto vec=B_section.automaticInsert_perday();
     
-    //B_section.printauto();
-    //B_section.insert_into_file();
-    // it needs time for the inserting text to the file
-    //without a delay it would check an empty file
-    //cout<<(B_section.timetable_compare("Timetables/_section.txt"));
-    //cout<<B_section.compare_tt(vec);
-    return 0;
-}
+//     B_section.printauto();
+//     B_section.insert_into_file();
+//     //it needs time for the inserting text to the file
+//     //without a delay it would check an empty file
+//     cout<<B_section.timetable_compare("Timetables/LL_section.txt");
+//     cout<<B_section.compare_tt(vec);
+//     B_section.file_transplant();
+//     return 0;
+// }
 
 PYBIND11_MODULE(tester,handle){
     handle.doc()="this is a module for creating a student timetable program";
@@ -293,6 +307,7 @@ PYBIND11_MODULE(tester,handle){
     .def("printer",&ClassTimetable::printauto)
     .def("compare",&ClassTimetable::compare_tt)
     .def("tt_compare",&ClassTimetable::compare_tt)
+    .def("file__",&ClassTimetable::file_transplant);
     ;
 }
 
