@@ -1,5 +1,5 @@
-arithemtic bash 
+maths 
 arithemtic 
-arithemtic 
+arithemtic maths 
 bash arithemtic 
 arithemtic 

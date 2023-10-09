@@ -1,5 +1,0 @@
-maths arithemtic 
-maths python c 
-python c bash arithemtic 
-arithemtic python 
-c arithemtic maths python 
