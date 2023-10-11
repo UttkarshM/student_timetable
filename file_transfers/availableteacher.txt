@@ -1,7 +1,7 @@
-arithemtic 447
-python 532
-english 400
-maths 186
-bash 200
-c 990
-c++ 320
+arithemtic 0 
+python 0
+english 0
+maths 0
+bash 0
+c 0
+c++ 0

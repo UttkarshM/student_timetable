@@ -83,6 +83,16 @@ public:
     return 0;
   }
 
+  bool no_teachers_available(){
+    unordered_map<std::string,int>::iterator iter;
+    for(iter=TotalNumberofTeachers.begin();iter!=TotalNumberofTeachers.end();iter++){
+      if(iter->second !=0){
+        return false;
+      }
+    }
+    std::cout<<"no teachers available";
+    return true;
+  }
   bool compare_tt(vector<vector<string>> autott) {
     DIR *dr;
     vector<string> files;
@@ -125,16 +135,14 @@ public:
     int val = 0;
     for (char ch : str) {
       if (isdigit(ch)) {
-        val = val * 10 +
-              (ch - '0'); // ascii value of numbers start from 0-48 we are
+        val = val * 10 +(ch - '0'); // ascii value of numbers start from 0-48 we are
                           // subtracting it to get the actual numbers.
                           // std::cout<<val<<"val+"<<ch<<std::endl;
       }
     }
     return val;
   }
-  void is_newline(
-      std::string stre) { // used to check if there is a new line character in
+  void is_newline(std::string stre) { // used to check if there is a new line character in
                           // your string. //debugging purposes.
     for (char ch : stre) {
       if (ch == '\n') {
@@ -202,8 +210,6 @@ public:
   }
   int i = 0;
   vector<vector<string>> automaticInsert_perday() {
-    // TODO: fix this for a single subject input
-    //  Subjects={"python","c++","maths","bash"};
     int day = 0, iter = 0;
     if (Subjects.size() == 0) {
       return {{}};
@@ -226,6 +232,10 @@ public:
       std::vector<std::string>::iterator iter;
       int i = 0;
       while (i < limit && currentDay.size() < randnum) {
+        if(no_teachers_available()){
+          std::cout<<"no teachers are available"<<std::endl;
+          exit(0);
+        }
         if (TotalNumberofTeachers[Subjects[i]] != 0) {
           TotalNumberofTeachers[Subjects[i]]--;
           currentDay.push_back(Subjects[i]);
@@ -300,7 +310,6 @@ public:
 //     return 0;
 // }
 
-// TODO: maybe better names lmaoooo
 PYBIND11_MODULE(tester, handle) {
   handle.doc() = "this is a module for creating a student timetable program";
   py::class_<ClassTimetable>( // defining the class
@@ -318,6 +327,7 @@ PYBIND11_MODULE(tester, handle) {
       .def("printer", &ClassTimetable::printauto)
       .def("compare", &ClassTimetable::compare_tt)
       .def("tt_compare", &ClassTimetable::compare_tt)
-      .def("file__", &ClassTimetable::file_transplant);
+      .def("file__", &ClassTimetable::file_transplant)
+      .def("NoTeachers",&ClassTimetable::no_teachers_available);
   ;
 }
