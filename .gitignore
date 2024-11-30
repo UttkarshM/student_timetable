@@ -1,1 +1,7 @@
 build/
+CMakeFiles/
+CMakeCache.txt
+envi/
+cmake_install.cmake
+*.so
+Makefile

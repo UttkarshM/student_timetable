@@ -1,8 +1,0 @@
-[
-{
-  "directory": "/home/uttkarsh/student_timetable/student_timetable/build",
-  "command": "/usr/bin/g++ -Dtester_EXPORTS -isystem /home/uttkarsh/student_timetable/student_timetable/pybind11/include -isystem /usr/include/python3.11 -g -fPIC -fvisibility=hidden -o CMakeFiles/tester.dir/tester.cpp.o -c /home/uttkarsh/student_timetable/student_timetable/tester.cpp",
-  "file": "/home/uttkarsh/student_timetable/student_timetable/tester.cpp",
-  "output": "CMakeFiles/tester.dir/tester.cpp.o"
-}
-]
