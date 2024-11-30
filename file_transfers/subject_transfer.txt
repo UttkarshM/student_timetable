@@ -1,3 +1,2 @@
-arithemtic
-bash
-maths
+c
+python
